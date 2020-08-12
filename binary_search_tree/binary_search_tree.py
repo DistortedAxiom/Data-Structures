@@ -17,20 +17,55 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        # Check if value is less than the current node's value
+        if value < self.value:
+            if self.left:
+                self.left.insert(value)
+            else:
+                self.left = BSTNode(value)
+        else:
+            if self.right:
+                self.right.insert(value)
+            else:
+                self.right = BSTNode(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+
+        if self.value == target:
+            return True
+
+        if target < self.value:
+            if self.left is None:
+                return False
+            else:
+                return self.left.contains(target)
+
+        else:
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+
+        current = self
+
+        while(current.right):
+            current = current.right
+        return current.value
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        fn(self.value)
+
+        if self.right:
+            self.right.for_each(fn)
+
+        if self.left:
+            self.left.for_each(fn)
 
     # Part 2 -----------------------
 
@@ -63,23 +98,3 @@ class BSTNode:
 """
 This code is necessary for testing the `print` methods
 """
-bst = BinarySearchTree(1)
-
-bst.insert(8)
-bst.insert(5)
-bst.insert(7)
-bst.insert(6)
-bst.insert(3)
-bst.insert(4)
-bst.insert(2)
-
-bst.bft_print()
-bst.dft_print()
-
-print("elegant methods")
-print("pre order")
-bst.pre_order_dft()
-print("in order")
-bst.in_order_dft()
-print("post order")
-bst.post_order_dft()  
