@@ -9,6 +9,8 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+from _collections import deque
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -72,29 +74,82 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+
+        if self.left is not None:
+            self.left.in_order_print()
+
+        print(self.value)
+
+        if self.right is not None:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        q = deque()
+        q.append(self)
+
+        while len(q) > 0:
+            current = q.popleft()
+            print(current.value)
+
+            if current.left:
+                q.append(current.left)
+
+            if current.right:
+                q.append(current.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        stack = []
+        stack.append(self)
+
+        while len(stack) > 0:
+            current_node = stack.pop()
+            print(current_node.value)
+
+            if current_node.left:
+                stack.append(current_node.left)
+
+            if current_node.right:
+                stack.append(current_node.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
-    def pre_order_dft(self):
+    def pre_order_print(self):
         pass
 
+
     # Print Post-order recursive DFT
-    def post_order_dft(self):
+    def post_order_print(self):
         pass
+
 
 """
 This code is necessary for testing the `print` methods
 """
+bst = BSTNode(1)
+
+bst.insert(8)
+bst.insert(5)
+bst.insert(7)
+bst.insert(6)
+bst.insert(3)
+bst.insert(4)
+bst.insert(2)
+
+print("bft print")
+bst.bft_print()
+print("dft print")
+bst.dft_print()
+
+print("elegant methods")
+print("pre order")
+bst.pre_order_print()
+print("in order")
+bst.in_order_print()
+print("post order")
+bst.post_order_print()
